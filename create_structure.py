@@ -5,19 +5,20 @@ from structure import create_directory, create_file
 ROOT_DIR = os.getcwd()
 
 # 1. Automate Folder Creation
-# We create a dedicated 'documents' folder for the office files, and 'src' for code logic
-required_folders = [
-    "src",
-    "data",
-    "reports"
-]
+def create_folders:
+    # We create a dedicated 'documents' folder for the office files, and 'src' for code logic
+    required_folders = [
+        "src",
+        "data",
+        "reports"
+    ]
 
-for folder in required_folders:
-    if not os.path.exists(os.path.join(ROOT_DIR, folder)):
-        print(f"Creating folder: {folder}")
-        create_directory(ROOT_DIR, folder)
-    else:
-        print(f"Folder already exists: {folder}")
+    for folder in required_folders:
+        if not os.path.exists(os.path.join(ROOT_DIR, folder)):
+            print(f"Creating folder: {folder}")
+            create_directory(ROOT_DIR, folder)
+        else:
+            print(f"Folder already exists: {folder}")
     
 
 # 2. Automate File Creation

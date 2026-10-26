@@ -1,9 +1,12 @@
 # This is the main entry point for the application
 import os
+from 
 from src.file_manager import FileManager
 
 if __name__ == '__main__':
     try:
+        
+        
         # Initialise the system using the 'data' folder
         manager = FileManager(storage_dir='data')
         
@@ -35,12 +38,16 @@ if __name__ == '__main__':
         # Complex Comprehension Layouts requested by target output
         print(f'\nDictionary of filename lengths: {manager.get_lengths_dict()}')
         print(f'Sorted files by name length: {manager.get_sorted_by_length()}')
+        print(f'Sorted files by name length: {manager.get_sorted_lambda()}')        
         print(f'Uppercase filenames: {manager.get_uppercase_names()}')
         print(f'Report files: {manager.get_report_files()}')
         print(f'Any report files? {manager.has_any_reports()}')
-        print(f'Are all files text files? {manager.are_all_txt()}')
+        print(f'Check all text files: {manager.get_txt_files()}')
+        print(f'Using Lambda, check all text files: {manager.get_txt_files_lambda()}')
         print(f'Filename-length pairs: {manager.get_name_length_pairs()}')
-        
+        print(f'Filename-length pairs using zip: {manager.get_filename_length_pairs_zip()}')
+        print(f'Filename lengths using map(): {manager.get_filename_lengths()}')
+        print(f'Delete the file: {manager.delete_file("notes.txt")}')
         # 5. Handle missing file error explicitly
         print('\nTesting a missing file:')
         
