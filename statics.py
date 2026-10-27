@@ -22,4 +22,9 @@ REQUIRED_FILES = [
         "file_name": "file_manager.py",
         "content": "# Manages text documents within a dedicated data workspace.\n",
     },
+    {
+        "sub_folder": "",
+        "file_name": "test.py",
+        "content": "# This is the test file for testing the app\n",
+    },
 ]
