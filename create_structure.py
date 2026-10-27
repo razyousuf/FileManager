@@ -1,55 +1,67 @@
+
 import os
-from structure import create_directory, create_file
 
-# Define portable root directory
-ROOT_DIR = os.getcwd()
+from structure import DirectoryManager
+from statics import REQUIRED_FOLDERS, REQUIRED_FILES
 
-# 1. Automate Folder Creation
-def create_folders:
-    # We create a dedicated 'documents' folder for the office files, and 'src' for code logic
-    required_folders = [
-        "src",
-        "data",
-        "reports"
-    ]
 
-    for folder in required_folders:
-        if not os.path.exists(os.path.join(ROOT_DIR, folder)):
-            print(f"Creating folder: {folder}")
-            create_directory(ROOT_DIR, folder)
-        else:
-            print(f"Folder already exists: {folder}")
-    
+class CreateStructure:
+    def __init__(self, root_dir=None):
+        # Use this script's directory by default, not the launch directory.
+        if root_dir is None:
+            root_dir = os.path.dirname(os.path.abspath(__file__))
 
-# 2. Automate File Creation
-# Leave sub_folder as "" if you want the file written directly to the root directory
-required_files = [
-    {
-        "sub_folder": "", 
-        "file_name": "run.py", 
-        "content": """# This is the main entry point for the application"""
-    },
-    {
-        "sub_folder": "src", 
-        "file_name": "__init__.py", 
-        "content": """# Marks this directory as a Python package"""
-    },
-     {
-        "sub_folder": "src", 
-        "file_name": "file_manager.py", 
-        "content": """# Manages text documents within a dedicated data workspace."""
-     },
-]
+        self.root_dir = os.path.abspath(root_dir)
+        self.dirmanager = DirectoryManager(self.root_dir)
 
-# Create all files in a single, simple loop
-for file_info in required_files:
-    if not os.path.exists(os.path.join(ROOT_DIR, file_info["sub_folder"], file_info["file_name"])):
-        print(f"Creating file: {file_info['file_name']} in folder: {file_info['sub_folder']}")
-        create_file(
-            base_dir=ROOT_DIR,
-            sub_folder=file_info["sub_folder"],
-            file_name=file_info["file_name"],
-            content=file_info["content"]
-        )
-    else:
-        print(f"File already exists: {file_info['file_name']} in folder: {file_info['sub_folder']}")
+    def create_folders(self):
+        """Create all required folders without disturbing existing ones."""
+        for folder in REQUIRED_FOLDERS:
+            folder_path = os.path.join(self.root_dir, folder)
+
+            if not os.path.isdir(folder_path):
+                print(f"Creating folder: {folder}")
+                self.dirmanager.create_directory(folder)
+            else:
+                print(f"Folder already exists: {folder}")
+
+    def create_files(self):
+        """Create required files without overwriting existing files."""
+        for file_info in REQUIRED_FILES:
+            sub_folder = file_info["sub_folder"]
+            file_name = file_info["file_name"]
+            content = file_info["content"]
+
+            file_path = os.path.join(
+                self.root_dir,
+                sub_folder,
+                file_name,
+            )
+
+            if os.path.isfile(file_path):
+                print(
+                    f"File already exists: {file_name} "
+                    f"in folder: {sub_folder or '.'}"
+                )
+                continue
+
+            print(
+                f"Creating file: {file_name} "
+                f"in folder: {sub_folder or '.'}"
+            )
+
+            self.dirmanager.create_file(
+                sub_folder=sub_folder,
+                file_name=file_name,
+                content=content,
+            )
+
+    def create_structure(self):
+        """Create the complete initial project structure."""
+        self.create_folders()
+        self.create_files()
+
+
+# if __name__ == "__main__":
+#     creator = CreateStructure()
+#     creator.create_structure()

@@ -1,11 +1,10 @@
 # This is the main entry point for the application
 import os
-from 
 from src.file_manager import FileManager
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
+def run_file_manager():
     try:
-        
         
         # Initialise the system using the 'data' folder
         manager = FileManager(storage_dir='data')
