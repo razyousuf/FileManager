@@ -93,7 +93,20 @@ class FileManager:
             files = self.list_files()
             lengths = list(map(len, files))
             return list(zip(files, lengths))
+        
+    # Iterator: return one filename at a time.
+    def iter_files(self):
+        """Return an iterator over the filenames in the storage directory."""
+        return iter(os.listdir(self.storage_dir))
     
+    # Generator: yield one line at a time from a text file.
+    def gen_read_lines(self, filename):
+        """Read a text file lazily, yielding one line at a time (for memory optimisation)."""
+        path = self.file_path(filename)
+        with open(path, "r", encoding="utf-8") as f:
+            yield from f
+    
+    # Delete file
     def delete_file(self, filename):
         try:
             path = self.file_path(filename)

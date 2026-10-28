@@ -55,7 +55,19 @@ def run_file_manager():
         # 6. Validate a filename using the static method
         print(f'\nFile name validation result: {manager.is_valid_filename("report.txt")}')
     
-        # 7. Demonstrate the use of a class method to create an instance from a configuration dictionary
+        7. # Iterator and Generator usage
+        files = manager.iter_files()
+        print("First file:", next(files, "No files found"))
+        
+        # Read a text file line by line
+        try:
+            for line in manager.gen_read_lines("test_generator.txt"):
+                print(line, end="")
+        except FileNotFoundError:
+            print("report.txt was not found.")
+
+    
+        # 8. Demonstrate the use of a class method to create an instance from a configuration dictionary
         config = {'storage_dir': 'reports'}
         manager2 = FileManager.from_config(config)
         print(f'\nNew FileManager instance created with storage directory: {manager2.storage_dir}')
